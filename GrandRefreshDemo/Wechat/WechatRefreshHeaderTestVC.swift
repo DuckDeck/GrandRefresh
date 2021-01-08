@@ -14,7 +14,7 @@ class WechatRefreshHeaderTestVC: BaseTableViewController{
         super.viewDidLoad()
         //Setup
         let wechatHeader = WechatRefreshHeader()
-        self.tableView.gtm_addRefreshHeaderView(refreshHeader: wechatHeader) {
+        self.tableView.g_addRefreshHeaderView(refreshHeader: wechatHeader) {
             [weak self] in
             print("excute refreshBlock")
             self?.refresh()

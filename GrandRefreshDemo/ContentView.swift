@@ -14,6 +14,7 @@ struct ContentView: View {
                 NavigationLink("默认效果", destination: DefaultScrollDemo())
                 NavigationLink("微信", destination: WechatRefreshDemo())
                 NavigationLink("淘宝", destination: TaoBaoRefreshDemo())
+                NavigationLink("优酷", destination: YouKuRefreshDemo())
             }.navigationBarTitle(Text("下拉刷新Demo"),displayMode: .inline)
         }
     }

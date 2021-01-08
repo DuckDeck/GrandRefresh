@@ -1,21 +1,13 @@
-//
-//  DefaultGTMRefreshHeader.swift
-//  GTMRefresh
-//
-//  Created by 骆扬 on 2019/12/30.
-//  Copyright © 2019 luoyang. All rights reserved.
-//
-
 import UIKit
 
 
-public class DefaultGTMRefreshHeader: GTMRefreshHeader, SubGTMRefreshHeaderProtocol {
+public class DefaultRefreshHeader: RefreshHeader, SubRefreshHeaderProtocol {
     
-    var pullDownToRefresh = GTMRLocalize("pullDownToRefresh")
-    var releaseToRefresh = GTMRLocalize("releaseToRefresh")
-    var refreshSuccess = GTMRLocalize("refreshSuccess")
-    var refreshFailure = GTMRLocalize("refreshFailure")
-    var refreshing = GTMRLocalize("refreshing")
+    var pullDownToRefresh = RLocalize("pullDownToRefresh")
+    var releaseToRefresh = RLocalize("releaseToRefresh")
+    var refreshSuccess = RLocalize("refreshSuccess")
+    var refreshFailure = RLocalize("refreshFailure")
+    var refreshing = RLocalize("refreshing")
     
     var txtColor: UIColor? {
         didSet {
@@ -36,7 +28,7 @@ public class DefaultGTMRefreshHeader: GTMRefreshHeader, SubGTMRefreshHeaderProto
     
     lazy var pullingIndicator: UIImageView = {
         let pindicator = UIImageView()
-        pindicator.image = UIImage(named: "arrow_down", in: Bundle(for: GTMRefreshHeader.self), compatibleWith: nil)
+        pindicator.image = UIImage(named: "arrow_down", in: Bundle(for: RefreshHeader.self), compatibleWith: nil)
         
         return pindicator
     }()
@@ -86,7 +78,7 @@ public class DefaultGTMRefreshHeader: GTMRefreshHeader, SubGTMRefreshHeaderProto
         messageLabel.frame = self.bounds
     }
     
-    // MARK:- SubGTMRefreshHeaderProtocol
+    // MARK:- SubRefreshHeaderProtocol
     
     /// 控件的高度
     ///
@@ -104,7 +96,7 @@ public class DefaultGTMRefreshHeader: GTMRefreshHeader, SubGTMRefreshHeaderProto
         if let img = self.idleImage {
             pullingIndicator.image = img
         } else {
-            pullingIndicator.image = UIImage(named: "arrow_down", in: Bundle(for: DefaultGTMRefreshHeader.self), compatibleWith: nil)
+            pullingIndicator.image = UIImage(named: "arrow_down", in: Bundle(for: DefaultRefreshHeader.self), compatibleWith: nil)
         }
     }
     public func toRefreshingState() {
@@ -149,14 +141,14 @@ public class DefaultGTMRefreshHeader: GTMRefreshHeader, SubGTMRefreshHeaderProto
             if let img = self.sucImage {
                 pullingIndicator.image = img
             } else {
-                pullingIndicator.image = UIImage(named: "success", in: Bundle(for: DefaultGTMRefreshHeader.self), compatibleWith: nil)
+                pullingIndicator.image = UIImage(named: "success", in: Bundle(for: DefaultRefreshHeader.self), compatibleWith: nil)
             }
         } else {
             messageLabel.text =  self.refreshFailure
             if let img = self.failImage {
                 pullingIndicator.image = img
             } else {
-                pullingIndicator.image = UIImage(named: "failure", in: Bundle(for: DefaultGTMRefreshHeader.self), compatibleWith: nil)
+                pullingIndicator.image = UIImage(named: "failure", in: Bundle(for: DefaultRefreshHeader.self), compatibleWith: nil)
             }
         }
     }

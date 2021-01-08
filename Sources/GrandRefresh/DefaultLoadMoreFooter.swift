@@ -1,20 +1,12 @@
-//
-//  DefaultGTMLoadMoreFooter.swift
-//  GTMRefresh
-//
-//  Created by 骆扬 on 2019/12/30.
-//  Copyright © 2019 luoyang. All rights reserved.
-//
-
 import UIKit
 
 
-public class DefaultGTMLoadMoreFooter: GTMLoadMoreFooter, SubGTMLoadMoreFooterProtocol {
+public class DefaultLoadMoreFooter: LoadMoreFooter, SubLoadMoreFooterProtocol {
     
-    var pullUpToRefreshText: String = GTMRLocalize("pullUpToRefresh")
-    public var loaddingText: String = GTMRLocalize("loadMore")
-    public var noMoreDataText: String = GTMRLocalize("noMoreData")
-    public var releaseLoadMoreText: String = GTMRLocalize("releaseLoadMore")
+    var pullUpToRefreshText: String = RLocalize("pullUpToRefresh")
+    public var loaddingText: String = RLocalize("loadMore")
+    public var noMoreDataText: String = RLocalize("noMoreData")
+    public var releaseLoadMoreText: String = RLocalize("releaseLoadMore")
     
     var txtColor: UIColor? {
         didSet {
@@ -37,7 +29,7 @@ public class DefaultGTMLoadMoreFooter: GTMLoadMoreFooter, SubGTMLoadMoreFooterPr
         if let img = self.idleImage {
             pindicator.image = img
         } else {
-            pindicator.image = UIImage(named: "arrow_down", in: Bundle(for: GTMLoadMoreFooter.self), compatibleWith: nil)
+            pindicator.image = UIImage(named: "arrow_down", in: Bundle(for: LoadMoreFooter.self), compatibleWith: nil)
         }
         return pindicator
     }()
@@ -97,7 +89,7 @@ public class DefaultGTMLoadMoreFooter: GTMLoadMoreFooter, SubGTMLoadMoreFooterPr
         messageLabel.frame = self.bounds
     }
     
-    // MARK: SubGTMLoadMoreFooterProtocol
+    // MARK: SubLoadMoreFooterProtocol
     
     /// 控件的高度
     ///

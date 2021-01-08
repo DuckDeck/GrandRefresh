@@ -9,10 +9,12 @@
 import GrandRefresh
 import UIKit
 
-class YoukuRefreshHeader: GTMRefreshHeader, SubGTMRefreshHeaderProtocol {
+class YoukuRefreshHeader: RefreshHeader, SubRefreshHeaderProtocol {
     let iconImageView = UIImageView()// 这个ImageView用来显示下拉箭头
     let rotatingImageView = UIImageView() //这个ImageView用来播放动图
     let backgroundImageView = UIImageView() //这个ImageView用来显示广告的
+    let screenWidth = UIScreen.main.bounds.size.width
+
     let frameHeight: CGFloat = UIScreen.main.bounds.size.width * 328.0/571.0
 
     override init(frame: CGRect) {
@@ -39,10 +41,10 @@ class YoukuRefreshHeader: GTMRefreshHeader, SubGTMRefreshHeaderProtocol {
         let x = self.frame.origin.x, y = self.frame.origin.y, w = self.frame.size.width, h = self.frame.size.height
         
         backgroundImageView.frame = CGRect(x: x, y: y, width: w, height: frameHeight)
-        backgroundImageView.center = CGPoint(x: w/2, y: h - frameHeight/2)
+        backgroundImageView.center = CGPoint(x: screenWidth/2, y: h - frameHeight/2)
         
         iconImageView.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
-        iconImageView.center = CGPoint(x: w/2, y: h/2)
+        iconImageView.center = CGPoint(x: screenWidth/2, y: h/2)
         
         rotatingImageView.frame = iconImageView.frame
         rotatingImageView.center = iconImageView.center

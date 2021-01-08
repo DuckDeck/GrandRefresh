@@ -1,14 +1,7 @@
-//
-//  GTMRefreshFooter.swift
-//  GTMRefresh
-//
-//  Created by luoyang on 2016/12/7.
-//  Copyright © 2016年 luoyang. All rights reserved.
-//
 
 import UIKit
 
-@objc public protocol SubGTMLoadMoreFooterProtocol {
+@objc public protocol SubLoadMoreFooterProtocol {
     @objc optional func toNormalState()
     @objc optional func toNoMoreDataState()
     @objc optional func toWillRefreshState()
@@ -20,7 +13,7 @@ import UIKit
     func contentHeith() -> CGFloat
 }
 
-open class GTMLoadMoreFooter: GTMRefreshComponent, SubGTMRefreshComponentProtocol {
+open class LoadMoreFooter: RefreshComponent, SubRefreshComponentProtocol {
     
     /// 加载更多Block
     var loadMoreBlock: () -> Void = {}
@@ -33,8 +26,8 @@ open class GTMLoadMoreFooter: GTMRefreshComponent, SubGTMRefreshComponentProtoco
     
     var lastBottomDelta: CGFloat = 0.0
     
-    public var subProtocol: SubGTMLoadMoreFooterProtocol? {
-        get { return self as? SubGTMLoadMoreFooterProtocol }
+    public var subProtocol: SubLoadMoreFooterProtocol? {
+        get { return self as? SubLoadMoreFooterProtocol }
     }
     
     public var isNoMoreData: Bool = false {
@@ -47,18 +40,18 @@ open class GTMLoadMoreFooter: GTMRefreshComponent, SubGTMRefreshComponentProtoco
         }
     }
     
-    override var state: GTMRefreshState {
+    override var state: RefreshState {
         didSet {
             guard oldValue != state, let scrollV = scrollView else {
                 return
             }
-            if let header = scrollV.gtmHeader, header.isRefreshing {
+            if let header = scrollV.gHeader, header.isRefreshing {
                 return
             }
             switch state {
             case .idle:
                 // 结束加载
-                UIView.animate(withDuration: GTMRefreshConstant.slowAnimationDuration, animations: {
+                UIView.animate(withDuration: RefreshConstant.slowAnimationDuration, animations: {
                     scrollV.mj_insetB = self.lastBottomDelta
                     //  print("self.lastBottomDelta = \(self.lastBottomDelta)")
                 }, completion: { (isComplet) in
@@ -72,7 +65,7 @@ open class GTMLoadMoreFooter: GTMRefreshComponent, SubGTMRefreshComponentProtoco
                 }
                 self.loadMoreBlock()
                 // 展示正在加载动效
-                UIView.animate(withDuration: GTMRefreshConstant.fastAnimationDuration, animations: {
+                UIView.animate(withDuration: RefreshConstant.fastAnimationDuration, animations: {
                     let overflowHeight = self.contentOverflowHeight
                     var toInsetB = self.mj_h + (self.scrollViewOriginalInset?.bottom)!
                     if overflowHeight < 0 {
@@ -132,7 +125,7 @@ open class GTMLoadMoreFooter: GTMRefreshComponent, SubGTMRefreshComponentProtoco
     }
     
     
-    // MARK: - SubGTMRefreshComponentProtocol
+    // MARK: - SubRefreshComponentProtocol
     
     open func scollViewContentOffsetDidChange(change: [NSKeyValueChangeKey : Any]?) {
         // refreshing或者noMoreData状态，直接返回

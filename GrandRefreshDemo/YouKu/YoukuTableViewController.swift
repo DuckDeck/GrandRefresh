@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+import SwiftUI
 class YoukuTableViewController:BaseTableViewController{
     var refreshHeader:YoukuRefreshHeader?
     override func viewDidLoad() {
@@ -26,7 +26,7 @@ class YoukuTableViewController:BaseTableViewController{
         let rightItem = UIBarButtonItem(customView: sw)
         sw.addTarget(self, action: #selector(YoukuTableViewController.switchValueChanged(_:)), for: UIControl.Event.valueChanged)
         self.navigationItem.rightBarButtonItem = rightItem
-        self.tableView.gtm_addRefreshHeaderView(refreshHeader: youkuHeader) {
+        self.tableView.g_addRefreshHeaderView(refreshHeader: youkuHeader) {
             [weak self] in
             print("excute refreshBlock")
             self?.refresh()
@@ -44,5 +44,15 @@ class YoukuTableViewController:BaseTableViewController{
     }
     @objc func switchValueChanged(_ sender:UISwitch){
         refreshHeader?.backgroundImageView.isHidden = !sender.isOn
+    }
+}
+struct YouKuRefreshDemo:UIViewControllerRepresentable {
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        
+    }
+    typealias UIViewControllerType = YoukuTableViewController
+    
+    func makeUIViewController(context: Context) -> YoukuTableViewController {
+        return YoukuTableViewController()
     }
 }

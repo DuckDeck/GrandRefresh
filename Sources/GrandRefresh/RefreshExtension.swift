@@ -1,56 +1,48 @@
-//
-//  GTMRefreshExtension.swift
-//  GTMRefresh
-//
-//  Created by luoyang on 2016/12/7.
-//  Copyright © 2016年 luoyang. All rights reserved.
-//
-
 import UIKit
 import ObjectiveC
 
 extension UIScrollView {
     
-    internal var gtmHeader: GTMRefreshHeader? {
+    internal var gHeader: RefreshHeader? {
         get {
-            return objc_getAssociatedObject(self, &GTMRefreshConstant.associatedObjectGtmHeader) as? GTMRefreshHeader
+            return objc_getAssociatedObject(self, &RefreshConstant.associatedObjectHeader) as? RefreshHeader
         }
         set {
-            objc_setAssociatedObject(self, &GTMRefreshConstant.associatedObjectGtmHeader, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &RefreshConstant.associatedObjectHeader, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
-    internal var gtmFooter: GTMLoadMoreFooter? {
+    internal var gFooter: LoadMoreFooter? {
         get {
-            return objc_getAssociatedObject(self, &GTMRefreshConstant.associatedObjectGtmFooter) as? GTMLoadMoreFooter
+            return objc_getAssociatedObject(self, &RefreshConstant.associatedObjectFooter) as? LoadMoreFooter
         }
         set {
-            objc_setAssociatedObject(self, &GTMRefreshConstant.associatedObjectGtmFooter, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &RefreshConstant.associatedObjectFooter, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     
     /// 添加下拉刷新
     ///
     /// - Parameters:
-    ///   - refreshHeader: 下拉刷新动效View必须继承GTMRefreshHeader并且要实现SubGTMRefreshHeaderProtocol，不传值的时候默认使用 DefaultGTMRefreshHeader
+    ///   - refreshHeader: 下拉刷新动效View必须继承RefreshHeader并且要实现SubRefreshHeaderProtocol，不传值的时候默认使用 DefaultRefreshHeader
     ///   - refreshBlock: 刷新数据Block
     @discardableResult
-    final public func gtm_addRefreshHeaderView(refreshHeader: GTMRefreshHeader? = DefaultGTMRefreshHeader(), refreshBlock:@escaping () -> Void) -> UIScrollView {
+    final public func g_addRefreshHeaderView(refreshHeader: RefreshHeader? = DefaultRefreshHeader(), refreshBlock:@escaping () -> Void) -> UIScrollView {
         
         guard let newHeader = refreshHeader else { return self }
         
-        guard newHeader is SubGTMRefreshHeaderProtocol  else {
-            fatalError("refreshHeader must implement SubGTMRefreshHeaderProtocol")
+        guard newHeader is SubRefreshHeaderProtocol  else {
+            fatalError("refreshHeader must implement SubRefreshHeaderProtocol")
         }
         
         newHeader.frame = CGRect(x: 0, y: 0, width: self.mj_w, height: newHeader.headerProtocolImp!.contentHeight())
         
-        if let oldHeader = gtmHeader {
+        if let oldHeader = gHeader {
             oldHeader.removeFromSuperview()
         }
         
         newHeader.refreshBlock = refreshBlock
         self.insertSubview(newHeader, at: 0)
-        self.gtmHeader = newHeader
+        self.gHeader = newHeader
         
         return self
     }
@@ -60,39 +52,39 @@ extension UIScrollView {
     /// 添加上拉加载
     ///
     /// - Parameters:
-    ///   - loadMoreFooter: 上拉加载动效View必须继承GTMLoadMoreFooter，不传值的时候默认使用 DefaultGTMLoadMoreFooter
+    ///   - loadMoreFooter: 上拉加载动效View必须继承LoadMoreFooter，不传值的时候默认使用 DefaultLoadMoreFooter
     ///   - refreshBlock: 加载更多数据Block
     @discardableResult
-    final public func gtm_addLoadMoreFooterView(loadMoreFooter: GTMLoadMoreFooter? = DefaultGTMLoadMoreFooter(), loadMoreBlock:@escaping () -> Void) -> UIScrollView {
+    final public func g_addLoadMoreFooterView(loadMoreFooter: LoadMoreFooter? = DefaultLoadMoreFooter(), loadMoreBlock:@escaping () -> Void) -> UIScrollView {
         
         guard let newFooter = loadMoreFooter else { return self }
         
-        guard loadMoreFooter is SubGTMLoadMoreFooterProtocol  else {
-            fatalError("loadMoreFooter must implement SubGTMLoadMoreFooterProtocol")
+        guard loadMoreFooter is SubLoadMoreFooterProtocol  else {
+            fatalError("loadMoreFooter must implement SubLoadMoreFooterProtocol")
         }
         newFooter.frame = CGRect(x: 0, y: 0, width: self.mj_w, height: newFooter.subProtocol!.contentHeith())
         
-        if let oldFooter = gtmFooter {
+        if let oldFooter = gFooter {
             oldFooter.removeFromSuperview()
         }
         
         newFooter.loadMoreBlock = loadMoreBlock
         self.insertSubview(newFooter, at: 0)
-        self.gtmFooter = newFooter
+        self.gFooter = newFooter
         return self
     }
     
     final public func triggerRefreshing(){
-        self.gtmHeader?.autoRefreshing()
+        self.gHeader?.autoRefreshing()
     }
     
     final public func endRefreshing(isSuccess: Bool = true) {
-        self.gtmHeader?.endRefresing(isSuccess: isSuccess)
+        self.gHeader?.endRefresing(isSuccess: isSuccess)
         // 重置footer状态（防止footer还处在数据加载完成状态）
-        self.gtmFooter?.state = .idle
+        self.gFooter?.state = .idle
     }
     final public func endLoadMore(isNoMoreData: Bool = false) {
-        self.gtmFooter?.endLoadMore(isNoMoreData: isNoMoreData)
+        self.gFooter?.endLoadMore(isNoMoreData: isNoMoreData)
     }
 }
 

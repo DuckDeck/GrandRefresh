@@ -1,14 +1,6 @@
-//
-//  GTMRefreshHeader.swift
-//  GTMRefresh
-//
-//  Created by luoyang on 2016/12/7.
-//  Copyright © 2016年 luoyang. All rights reserved.
-//
-
 import UIKit
 
-@objc public protocol SubGTMRefreshHeaderProtocol {
+@objc public protocol SubRefreshHeaderProtocol {
     /// 状态变成.idle
     @objc optional func toNormalState()
     /// 状态变成.refreshing
@@ -31,7 +23,7 @@ import UIKit
 }
 
 // MARK: -
-open class GTMRefreshHeader: GTMRefreshComponent, SubGTMRefreshComponentProtocol {
+open class RefreshHeader: RefreshComponent, SubRefreshComponentProtocol {
     
     /// 刷新数据Block
     var refreshBlock: () -> Void = { }
@@ -44,8 +36,8 @@ open class GTMRefreshHeader: GTMRefreshComponent, SubGTMRefreshComponentProtocol
     
     var insetTDelta: CGFloat = 0  // inset top 差值
     
-    public var headerProtocolImp: SubGTMRefreshHeaderProtocol? {
-        get { return self as? SubGTMRefreshHeaderProtocol }
+    public var headerProtocolImp: SubRefreshHeaderProtocol? {
+        get { return self as? SubRefreshHeaderProtocol }
     }
     
     var pullingPercent: CGFloat = 0 {
@@ -57,9 +49,9 @@ open class GTMRefreshHeader: GTMRefreshComponent, SubGTMRefreshComponentProtocol
         return state == .refreshing
     }
     
-    override var state: GTMRefreshState {
+    override var state: RefreshState {
         didSet {
-            print("GTMRefresh -> header state = \(state) ")
+            print("Refresh -> header state = \(state) ")
             guard oldValue != state else {
                 return
             }
@@ -70,7 +62,7 @@ open class GTMRefreshHeader: GTMRefreshComponent, SubGTMRefreshComponentProtocol
                 }
                 if oldValue == .refreshing {
                     DispatchQueue.main.async {
-                        UIView.animate(withDuration: GTMRefreshConstant.slowAnimationDuration, animations: {
+                        UIView.animate(withDuration: RefreshConstant.slowAnimationDuration, animations: {
                             self.scrollView?.mj_insetT += self.insetTDelta
                         }, completion: { (isFinish) in
                             self.headerProtocolImp?.didEndRefreshing?()
@@ -100,7 +92,7 @@ open class GTMRefreshHeader: GTMRefreshComponent, SubGTMRefreshComponentProtocol
                     return
                 }
                 DispatchQueue.main.async {
-                    UIView.animate(withDuration: GTMRefreshConstant.fastAnimationDuration, animations: {
+                    UIView.animate(withDuration: RefreshConstant.fastAnimationDuration, animations: {
                         self.headerProtocolImp?.toRefreshingState?()
                         
                         guard let originInset = self.scrollViewOriginalInset else {
@@ -173,7 +165,7 @@ open class GTMRefreshHeader: GTMRefreshComponent, SubGTMRefreshComponentProtocol
         return self.mj_h // 默认使用控件高度
     }
     
-    // MARK: - SubGTMRefreshComponentProtocol
+    // MARK: - SubRefreshComponentProtocol
     open func scollViewContentOffsetDidChange(change: [NSKeyValueChangeKey : Any]?) {
         
         guard let scrollV = self.scrollView else {

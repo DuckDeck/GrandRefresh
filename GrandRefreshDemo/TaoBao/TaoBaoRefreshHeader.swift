@@ -10,7 +10,7 @@ import GrandRefresh
 import UIKit
 
 
-class TaoBaoRefreshHeader: GTMRefreshHeader, SubGTMRefreshHeaderProtocol {
+class TaoBaoRefreshHeader: RefreshHeader, SubRefreshHeaderProtocol {
     fileprivate let circleLayer = CAShapeLayer()
     fileprivate let arrowLayer = CAShapeLayer()
     let screenWidth = UIScreen.main.bounds.size.width

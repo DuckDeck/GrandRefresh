@@ -8,7 +8,7 @@
 
 import UIKit
 import GrandRefresh
-class WechatRefreshHeader: GTMRefreshHeader, SubGTMRefreshHeaderProtocol {
+class WechatRefreshHeader: RefreshHeader, SubRefreshHeaderProtocol {
     var wheel: UIImageView = {
         let wheel = UIImageView()
         wheel.image = UIImage(named: "wechat")

@@ -14,13 +14,13 @@ class DefaultCollectionViewController:UIViewController,UICollectionViewDataSourc
         self.view.backgroundColor = UIColor.white
         self.setUpCollectionView()
         
-        self.collectionView?.gtm_addRefreshHeaderView {
+        self.collectionView?.g_addRefreshHeaderView {
             [weak self] in
             print("excute refreshBlock")
             self?.refresh()
         }
         
-        self.collectionView?.gtm_addLoadMoreFooterView {
+        self.collectionView?.g_addLoadMoreFooterView {
             [weak self] in
             print("excute loadMoreBlock")
             self?.loadMore()

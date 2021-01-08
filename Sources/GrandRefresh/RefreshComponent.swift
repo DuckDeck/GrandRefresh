@@ -1,10 +1,3 @@
-//
-//  GTMRefreshComponent.swift
-//  GTMRefresh
-//
-//  Created by luoyang on 2016/12/7.
-//  Copyright © 2016年 luoyang. All rights reserved.
-//
 
 import UIKit
 
@@ -15,7 +8,7 @@ import UIKit
 /// - refreshing:   正在刷新
 /// - willRefresh:  即将刷新
 /// - noMoreData:   没有更多数据
-public enum GTMRefreshState {
+public enum RefreshState {
     case idle           // 闲置
     case pulling        // 可以进行刷新
     case refreshing     // 正在刷新
@@ -23,18 +16,18 @@ public enum GTMRefreshState {
     case noMoreData     // 没有更多数据
 }
 
-public protocol SubGTMRefreshComponentProtocol {
+public protocol SubRefreshComponentProtocol {
     func scollViewContentOffsetDidChange(change: [NSKeyValueChangeKey : Any]?)
     func scollViewContentSizeDidChange(change: [NSKeyValueChangeKey : Any]?)
 }
 
-open class GTMRefreshComponent: UIView {
+open class RefreshComponent: UIView {
     
     public weak var scrollView: UIScrollView?
     
     public var scrollViewOriginalInset: UIEdgeInsets?
     
-    var state: GTMRefreshState = .idle
+    var state: RefreshState = .idle
     
     // MARK: Life Cycle
     
@@ -65,7 +58,7 @@ open class GTMRefreshComponent: UIView {
     }
     
     deinit {
-        if GTMRefreshConstant.debug { print("GTMRefreshComponent excute deinit() ... ")}
+        if RefreshConstant.debug { print("RefreshComponent excute deinit() ... ")}
     }
     
     override open func willMove(toSuperview newSuperview: UIView?) {
@@ -99,15 +92,15 @@ open class GTMRefreshComponent: UIView {
     // MARK: KVO
     
     private func addObserver() {
-        if GTMRefreshConstant.debug { print("GTMRefresh -> addObserver ... ")}
-        scrollView?.addObserver(self, forKeyPath: GTMRefreshConstant.keyPathContentOffset, options: .new, context: nil)
-        scrollView?.addObserver(self, forKeyPath: GTMRefreshConstant.keyPathContentSize, options: .new, context: nil)
+        if RefreshConstant.debug { print("Refresh -> addObserver ... ")}
+        scrollView?.addObserver(self, forKeyPath: RefreshConstant.keyPathContentOffset, options: .new, context: nil)
+        scrollView?.addObserver(self, forKeyPath: RefreshConstant.keyPathContentSize, options: .new, context: nil)
     }
     
     private func removeAbserver() {
-        if GTMRefreshConstant.debug { print("GTMRefresh -> removeAbserver ... ")}
-        scrollView?.removeObserver(self, forKeyPath: GTMRefreshConstant.keyPathContentOffset)
-        scrollView?.removeObserver(self, forKeyPath: GTMRefreshConstant.keyPathContentSize)
+        if RefreshConstant.debug { print("Refresh -> removeAbserver ... ")}
+        scrollView?.removeObserver(self, forKeyPath: RefreshConstant.keyPathContentOffset)
+        scrollView?.removeObserver(self, forKeyPath: RefreshConstant.keyPathContentSize)
     }
     
     override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -115,8 +108,8 @@ open class GTMRefreshComponent: UIView {
             return
         }
         
-        if let sub: SubGTMRefreshComponentProtocol = self as? SubGTMRefreshComponentProtocol {
-            if keyPath == GTMRefreshConstant.keyPathContentSize {
+        if let sub: SubRefreshComponentProtocol = self as? SubRefreshComponentProtocol {
+            if keyPath == RefreshConstant.keyPathContentSize {
                 sub.scollViewContentSizeDidChange(change: change)
             }
             
@@ -124,7 +117,7 @@ open class GTMRefreshComponent: UIView {
                 return
             }
             
-            if keyPath == GTMRefreshConstant.keyPathContentOffset {
+            if keyPath == RefreshConstant.keyPathContentOffset {
                 sub.scollViewContentOffsetDidChange(change: change)
             }
             
