@@ -6,7 +6,7 @@
 //  Copyright © 2016年 luoyang. All rights reserved.
 //
 
-import GrandRefresh
+
 import UIKit
 
 class YoukuRefreshHeader: RefreshHeader, SubRefreshHeaderProtocol {

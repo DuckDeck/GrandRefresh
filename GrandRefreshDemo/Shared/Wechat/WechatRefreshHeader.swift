@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import GrandRefresh
+
 class WechatRefreshHeader: RefreshHeader, SubRefreshHeaderProtocol {
     var wheel: UIImageView = {
         let wheel = UIImageView()
@@ -25,7 +25,7 @@ class WechatRefreshHeader: RefreshHeader, SubRefreshHeaderProtocol {
         setup()
     }
     
-    func setup() {
+    override func setup() {
         self.backgroundColor = .white
     }
     

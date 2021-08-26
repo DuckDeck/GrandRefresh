@@ -2,10 +2,10 @@
 //  BaseTableViewController.swift
 //  GrandRefreshDemo
 //
-//  Created by shadowedge on 2021/1/8.
+//  Created by Stan Hu on 2021/8/26.
 //
 
-import UIKit
+import Foundation
 import SwiftUI
 class BaseTableViewController: UITableViewController {
     var models = ["1、你若安好，便是晴天。",
@@ -47,5 +47,3 @@ class BaseTableViewController: UITableViewController {
         print("Deinit of \(NSStringFromClass(type(of: self)))")
     }
 }
-
-

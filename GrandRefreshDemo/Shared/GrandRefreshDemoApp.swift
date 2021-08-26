@@ -1,8 +1,8 @@
 //
 //  GrandRefreshDemoApp.swift
-//  GrandRefreshDemo
+//  Shared
 //
-//  Created by shadowedge on 2021/1/8.
+//  Created by Stan Hu on 2021/8/25.
 //
 
 import SwiftUI

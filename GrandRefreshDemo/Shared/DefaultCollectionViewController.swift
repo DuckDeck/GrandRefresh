@@ -1,8 +1,8 @@
 //
-//  DefaultScrollDemoViewController.swift
+//  DefaultCollectionViewController.swift
 //  GrandRefreshDemo
 //
-//  Created by shadowedge on 2021/1/8.
+//  Created by Stan Hu on 2021/8/26.
 //
 
 import Foundation
@@ -30,14 +30,14 @@ class DefaultCollectionViewController:UIViewController,UICollectionViewDataSourc
     
     // MARK: Test
     func refresh() {
-        perform(#selector(endRefresing), with: nil, afterDelay: 3)
+        perform(#selector(endRefresing), with: nil, afterDelay: 2)
     }
     
     @objc func endRefresing() {
         self.collectionView?.endRefreshing(isSuccess: true)
     }
     func loadMore() {
-        perform(#selector(endLoadMore), with: nil, afterDelay: 3)
+        perform(#selector(endLoadMore), with: nil, afterDelay: 2)
     }
     
     @objc func endLoadMore() {
@@ -81,4 +81,3 @@ struct DefaultScrollDemo:UIViewControllerRepresentable {
         return DefaultCollectionViewController()
     }
 }
-
